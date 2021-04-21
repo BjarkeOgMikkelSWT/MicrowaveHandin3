@@ -158,7 +158,7 @@ namespace Microwave.Test.Integration
         }
 
         [Test]
-        public void TestStartCancelResetsValuesAfterStopingCooking()
+        public void TestStartCancelResetsValuesAfterStoppingCooking()
         {
             _powerButton.Press();
             _powerButton.Press();
