@@ -144,7 +144,7 @@ namespace Microwave.Test.Integration
         }
 
         [Test]
-        public void TestStartCancelStartsStopsCookingAfterStart()
+        public void TestStartCancelStopsCookingAfterStart()
         {
             _powerButton.Press();
             _timerButton.Press();
@@ -155,7 +155,22 @@ namespace Microwave.Test.Integration
             _cook.Received(1).Stop();
             _display.Received(1).Clear();
             _light.Received(1).TurnOff();
-            
+        }
+
+        [Test]
+        public void TestStartCancelResetsValuesAfterStopingCooking()
+        {
+            _powerButton.Press();
+            _powerButton.Press();
+            _timerButton.Press();
+            _timerButton.Press();
+            _startCancelButton.Press();
+            _startCancelButton.Press();
+            _powerButton.Press();
+            _timerButton.Press();
+
+            _display.Received(2).ShowPower(50);
+            _display.Received(2).ShowTime(1, 0);
         }
     }
 }
