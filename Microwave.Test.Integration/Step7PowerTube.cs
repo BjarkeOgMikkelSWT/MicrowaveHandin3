@@ -74,6 +74,16 @@ namespace Microwave.Test.Integration
             _output.Received(1).OutputLine($"PowerTube works with {50*nbr_power_presses}");
         }
 
+        [Test]
+        public void TestPowerTubeTurnOffOutputsCorrectString()
+        {
+            _powerButton.Press();
+            _timerButton.Press();
+            _startCancelButton.Press();
+            _startCancelButton.Press();
+            _output.Received(1).OutputLine($"PowerTube turned off");
+        }
+
         [TearDown]
         public void TearDown()
         {
