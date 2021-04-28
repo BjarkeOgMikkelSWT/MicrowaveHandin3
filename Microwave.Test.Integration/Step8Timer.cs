@@ -82,9 +82,34 @@ namespace Microwave.Test.Integration
             _powerButton.Press();
             _timerButton.Press();
             _startCancelButton.Press();
-            Thread.Sleep(2000);
+            Thread.Sleep(2100);
             _output.Received(1).OutputLine($"Display shows: {0:D2}:{59:D2}");
             _output.Received(1).OutputLine($"Display shows: {0:D2}:{58:D2}");
+        }
+
+        [Test]
+        public void TestTimerExpiredIsCalledAtCorrectTime()
+        {
+            _powerButton.Press();
+            _timerButton.Press();
+            _startCancelButton.Press();
+            Thread.Sleep(60100);
+            _output.Received(1).OutputLine("PowerTube turned off");
+            _output.Received(1).OutputLine("Display cleared");
+            _output.Received(1).OutputLine("Light is turned off");
+
+        }
+
+        [Test]
+        public void TestTimerStopStopsTimer()
+        {
+            _powerButton.Press();
+            _timerButton.Press();
+            _startCancelButton.Press();
+            Thread.Sleep(1100);
+            _startCancelButton.Press();
+            Thread.Sleep(1100);
+            Assert.AreEqual(59, _timer.TimeRemaining);
         }
 
         [TearDown]
